@@ -8,7 +8,7 @@ const repoRoot = path.resolve(scriptDir, "..");
 const manifest = {
   name: "Local Chat Notepad",
   description:
-    "Adds a compact, movable, resizable browser-local notepad to Marinara Engine chats. Tabs are grouped by scope as numbered draggable bubbles, created as global/character/chat/branch notes, only shown when relevant, and can be renamed from the active tab details. Includes Markdown preview, formatting helpers, layout reset, backup, restore, and tab deletion.",
+    "Adds a compact, movable, resizable browser-local notepad to Marinara Engine chats. Tabs are grouped by scope as numbered draggable bubbles, created as global/character/chat/branch-wide notes, only shown when relevant, and can be renamed from the active tab details. Includes Markdown preview, formatting helpers, layout reset, backup, restore, and tab deletion.",
   css: await readFile(path.join(repoRoot, "src", "style.css"), "utf8"),
   js: await readFile(path.join(repoRoot, "src", "extension.js"), "utf8"),
 };

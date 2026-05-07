@@ -281,8 +281,7 @@ function getCurrentCharacterIds() {
 function titleForScope(scope, characterId, branchMode = "branch") {
   if (scope === "global") return "Global";
   if (scope === "character") return characterId ? getCharacterLabel(characterId) : "Character";
-  if (scope === "chat" && context.chat?.groupId && branchMode === "family") return "All branches";
-  if (scope === "chat" && context.chat?.groupId) return "Branch";
+  if (scope === "chat" && context.chat?.groupId && branchMode === "family") return "Branch-wide";
   if (scope === "chat") return "Chat";
   return "Notes";
 }
@@ -293,8 +292,8 @@ function isBranchSpecificTab(tab) {
 
 function labelForTabTarget(tab) {
   if (tab?.scope === "chat") {
-    if (tab.branchMode === "family") return "all branches";
-    return isBranchSpecificTab(tab) ? "this branch" : "this chat";
+    if (tab.branchMode === "family") return "branch-wide scope";
+    return "this chat";
   }
   return fullLabelForScope(tab?.scope || "chat").toLowerCase();
 }
@@ -491,8 +490,8 @@ function resolveScope(tab) {
     const groupId = tab.groupId || chat.groupId || chat.id;
     return {
       key: currentFamilyKey && hasNoteForScopeKey(tab, currentFamilyKey) ? currentFamilyKey : `chat-family:${groupId}`,
-      label: "All branches",
-      placeholder: "Notes shared across all branches of this chat.",
+      label: "Branch-wide",
+      placeholder: "Notes shared across every branch of this chat.",
     };
   }
 
@@ -500,10 +499,8 @@ function resolveScope(tab) {
   const chatId = tab.chatId || chat.id;
   return {
     key: hasNoteForScopeKey(tab, currentBranchKey) ? currentBranchKey : `chat:${chatId}`,
-    label: chat.groupId ? "This branch" : "This chat",
-    placeholder: chat.groupId
-      ? "Notes for this branch only. Switch Branching to All branches to share them."
-      : "Notes for this chat.",
+    label: "This chat",
+    placeholder: "Notes for this chat.",
   };
 }
 
@@ -1476,7 +1473,7 @@ function render() {
     ? resolveScope(tab)
     : {
         label: "No tabs for this chat.",
-        placeholder: "Create a tab for this chat, character, or all chats.",
+        placeholder: "Create a global, character, chat, or branch-wide tab.",
       };
 
   const header = createElement("div", "mn-notepad-header");
@@ -1513,13 +1510,13 @@ function render() {
       });
     }
     menu.appendChild(
-      createButton("mn-notepad-add-choice", context.chat?.groupId ? "Branch" : "Chat", "Create chat tab", () =>
+      createButton("mn-notepad-add-choice", "Chat", "Create chat-scoped tab", () =>
         addTab("chat", "branch"),
       ),
     );
     if (context.chat?.groupId) {
       menu.appendChild(
-        createButton("mn-notepad-add-choice", "All branches", "Create shared branch-family tab", () =>
+        createButton("mn-notepad-add-choice", "Branch-wide", "Create branch-wide tab", () =>
           addTab("chat", "family"),
         ),
       );
