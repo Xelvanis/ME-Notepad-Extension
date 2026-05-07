@@ -13,6 +13,6 @@ const manifest = {
   js: await readFile(path.join(repoRoot, "src", "extension.js"), "utf8"),
 };
 
-await writeFile(path.join(repoRoot, "local-chat-notepad.extension.json"), `${JSON.stringify(manifest, null, 2)}\n`);
+await writeFile(path.join(repoRoot, "ME-Notes.json"), `${JSON.stringify(manifest, null, 2)}\n`);
 
-console.log("Built local-chat-notepad.extension.json");
+console.log("Built ME-Notes.json");
