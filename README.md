@@ -2,7 +2,7 @@
 
 Tiny floating notes for people whose AI relationship continuity has more moving parts than a 200-episode anime.
 
-Local Chat Notepad adds a compact, movable notepad to Marinara Engine chats. It is for tracking character lore, branch timelines, date plans, emotional continuity, "do not forget this promise," and all the other high-priority waifu logistics that deserve their own little command center.
+Local Chat Notepad adds a compact, movable notepad to Marinara Engine chats. It's for tracking character lore, branch timelines, date plans, emotional continuity, "don't forget this promise," and all the other high-priority waifu logistics that deserve their own little command center.
 
 ## What It Does
 
@@ -11,8 +11,8 @@ Local Chat Notepad adds a compact, movable notepad to Marinara Engine chats. It 
 - Lets you create tabs scoped to:
   - **Global**: visible in every chat.
   - **Character**: visible in chats with that character.
-  - **Chat**: visible only in the current chat or branch.
-  - **Branch-wide**: shared across every branch in a branched chat family.
+  - **Chat**: visible only in the current chat.
+  - **Branch-wide**: shared across all branches in the current chat family.
 - Supports renameable, draggable tabs grouped by scope.
 - Includes simple Markdown editing and preview.
 - Supports bold, italic, underline, strikethrough, bullets, and checklists.
@@ -23,7 +23,9 @@ Local Chat Notepad adds a compact, movable notepad to Marinara Engine chats. It 
 
 Download `local-chat-notepad.extension.json` from the latest GitHub Release.
 
-If you are looking at the source code instead of a release, run the build script first:
+Chuck that bad boy into the Import Extension section in Marinara Engine.
+
+For fancy tech wizards - If you're looking at the source code instead of a release, run the build script first:
 
 ```bash
 node scripts/build-extension.mjs
@@ -39,7 +41,7 @@ That creates or refreshes `local-chat-notepad.extension.json` in the repo root.
 4. Select `local-chat-notepad.extension.json`.
 5. Open a chat and click `Notes`.
 
-That is it. Your continuity board is online. Canon may now be color-coded inside your brain.
+That's it! Your continuity board is online. Canon may now be color-coded inside your brain.
 
 ## How To Use
 
@@ -47,8 +49,8 @@ Click `+` to create a new tab. Pick the scope based on where you want the note t
 
 - Use **Global** for personal rules, general RP preferences, or recurring reminders.
 - Use **Character** for facts about one character across multiple chats.
-- Use **Chat** for one specific conversation or branch timeline.
-- Use **Branch-wide** for facts shared across every branch of a chat.
+- Use **Chat** for one specific conversation.
+- Use **Branch-wide** when one timeline needs its own receipts.
 
 Double-click the active tab title to rename it. Drag tabs within their row to reorder them. Use the edit/preview toggle to switch between writing Markdown and seeing the polished version.
 
@@ -56,11 +58,11 @@ The `...` menu has backup, restore, layout reset, and delete-tab actions.
 
 ## Privacy
 
-Your notes live in browser `localStorage` under Marinara's site data. They are not uploaded by this extension, not synced by this extension, and not injected into the model prompt.
+Your notes live in browser `localStorage` under Marinara's site data. They're NOT uploaded by this extension, NOT synced by this extension, and NOT injected into the model prompt.
 
 Translation: this is your private lore notebook. Your AI only knows what you actually put in chat.
 
-Before clearing browser data or moving computers, use `Export backup`.
+Before clearing browser data or moving computers, use `Export backup` or you will be a very sad panda.
 
 ## Development
 
@@ -82,14 +84,6 @@ The generated file is:
 ```text
 local-chat-notepad.extension.json
 ```
-
-## Release Checklist
-
-1. Update `CHANGELOG.md`.
-2. Run `node scripts/build-extension.mjs`.
-3. Test importing `local-chat-notepad.extension.json` in Marinara.
-4. Create a GitHub Release, for example `v1.0.0`.
-5. Attach `local-chat-notepad.extension.json` to the release.
 
 ## License
 
