@@ -1,0 +1,1357 @@
+.mn-notepad-root {
+  position: fixed;
+  right: 1rem;
+  bottom: 5.25rem;
+  z-index: 9998;
+  color: var(--foreground);
+  font: inherit;
+}
+
+.mn-notepad-root[data-layout="panel"],
+.mn-notepad-root[data-layout="collapsed"] {
+  right: auto;
+  bottom: auto;
+}
+
+.mn-notepad-root[data-dragging="true"],
+.mn-notepad-root[data-resizing="true"] {
+  user-select: none;
+}
+
+.mn-notepad-root[hidden],
+.mn-notepad-panel[hidden],
+.mn-notepad-launcher[hidden] {
+  display: none;
+}
+
+.mn-notepad-launcher,
+.mn-notepad-minimize-button,
+.mn-notepad-add-tab,
+.mn-notepad-more-button,
+.mn-notepad-tab,
+.mn-notepad-active-title,
+.mn-notepad-format-button,
+.mn-notepad-tabs-toggle,
+.mn-notepad-tabs-collapsed,
+.mn-notepad-add-choice,
+.mn-notepad-menu-button,
+.mn-notepad-status-dismiss,
+.mn-notepad-confirm-button {
+  border: 0;
+  font: inherit;
+}
+
+.mn-notepad-launcher {
+  min-width: 4rem;
+  min-height: 2.5rem;
+  border-radius: 0.5rem;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: 0 0.75rem 2rem rgb(0 0 0 / 0.3);
+  cursor: pointer;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  transition:
+    transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mn-notepad-launcher:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 1rem 2.5rem rgb(0 0 0 / 0.36);
+}
+
+.mn-notepad-launcher:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.mn-notepad-root[data-layout="collapsed"] .mn-notepad-launcher {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4375rem;
+  border: 1px solid var(--border);
+  border-radius: 0.625rem;
+  background: var(--card);
+  color: var(--foreground);
+  box-shadow: 0 0.75rem 2rem rgb(0 0 0 / 0.34);
+  padding: 0.4375rem 0.5rem;
+}
+
+.mn-notepad-root[data-layout="collapsed"] .mn-notepad-launcher:hover {
+  background: color-mix(in srgb, var(--card) 84%, var(--secondary));
+  box-shadow: 0 1rem 2.75rem rgb(0 0 0 / 0.42);
+}
+
+.mn-notepad-brand {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.mn-notepad-brand-icon {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  border: 1px solid color-mix(in srgb, var(--primary) 42%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--background) 54%, transparent);
+  object-fit: contain;
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--primary) 8%, transparent),
+    0 0.125rem 0.375rem rgb(0 0 0 / 0.28);
+  padding: 0.0625rem;
+}
+
+.mn-notepad-brand-label {
+  min-width: 0;
+  overflow: hidden;
+  letter-spacing: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mn-notepad-header .mn-notepad-brand {
+  gap: 0.375rem;
+}
+
+.mn-notepad-root[data-layout="collapsed"] .mn-notepad-brand {
+  max-width: 100%;
+}
+
+.mn-notepad-root[data-layout="collapsed"] .mn-notepad-brand-label {
+  font-size: 0.8125rem;
+  font-weight: 750;
+  line-height: 1.2;
+}
+
+.mn-notepad-panel {
+  position: relative;
+  display: flex;
+  width: min(24rem, calc(100vw - 1.5rem));
+  min-width: min(15rem, calc(100vw - 1.5rem));
+  min-height: 22.5rem;
+  max-height: min(42rem, 74vh);
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background: var(--card);
+  box-shadow: 0 1rem 3rem rgb(0 0 0 / 0.42);
+}
+
+.mn-notepad-root[data-layout="panel"] .mn-notepad-panel {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+}
+
+.mn-notepad-header {
+  position: relative;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.3125rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--primary) 18%, var(--border));
+  background:
+    linear-gradient(118deg, color-mix(in srgb, var(--primary) 10%, transparent), transparent 34%),
+    linear-gradient(180deg, color-mix(in srgb, var(--secondary) 54%, var(--card)), var(--card));
+  padding: 0.3125rem 0.5rem;
+  cursor: grab;
+  user-select: none;
+}
+
+.mn-notepad-header::after {
+  position: absolute;
+  left: 2.875rem;
+  right: 4.375rem;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--primary) 58%, transparent),
+    transparent
+  );
+  content: "";
+  opacity: 0.78;
+  pointer-events: none;
+}
+
+.mn-notepad-root[data-dragging="true"] .mn-notepad-header {
+  cursor: grabbing;
+}
+
+.mn-notepad-grip {
+  width: 0.625rem;
+  height: 1.25rem;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background-image: radial-gradient(circle, var(--muted-foreground) 1.1px, transparent 1.2px);
+  background-position: 0 0;
+  background-size: 0.375rem 0.375rem;
+  opacity: 0.34;
+}
+
+.mn-notepad-title-wrap {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.mn-notepad-kicker {
+  color: var(--muted-foreground);
+  font-size: 0.59375rem;
+  font-weight: 750;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.mn-notepad-title {
+  margin: 0;
+  overflow: hidden;
+  color: var(--primary);
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-shadow: 0 0 8px color-mix(in srgb, var(--primary) 20%, transparent);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mn-notepad-header-actions {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.1875rem;
+}
+
+.mn-notepad-minimize-button {
+  display: grid;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
+  border-radius: 0.375rem;
+  background: color-mix(in srgb, var(--secondary) 34%, transparent);
+  color: var(--muted-foreground);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.mn-notepad-minimize-button:hover {
+  border-color: color-mix(in srgb, var(--primary) 32%, var(--border));
+  background: color-mix(in srgb, var(--secondary) 78%, transparent);
+  color: var(--foreground);
+}
+
+.mn-notepad-more-button {
+  display: grid;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--border) 76%, transparent);
+  border-radius: 0.375rem;
+  background: color-mix(in srgb, var(--secondary) 28%, transparent);
+  color: var(--muted-foreground);
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 850;
+  line-height: 1;
+  padding-bottom: 0.21875rem;
+}
+
+.mn-notepad-more-button:hover {
+  border-color: color-mix(in srgb, var(--primary) 26%, var(--border));
+  background: color-mix(in srgb, var(--secondary) 72%, transparent);
+  color: var(--foreground);
+}
+
+.mn-notepad-tabs-section {
+  position: relative;
+  flex: 0 0 auto;
+  min-height: 2.5rem;
+  max-height: min(6.5rem, 32vh);
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-bottom: 1px solid color-mix(in srgb, var(--primary) 14%, var(--border));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--secondary) 42%, var(--card)), var(--card)),
+    color-mix(in srgb, var(--primary) 5%, var(--card));
+  contain: layout paint;
+  padding: 0.25rem 1.75rem 0.3125rem 0.1875rem;
+}
+
+.mn-notepad-tabs-section[data-collapsed="true"] {
+  min-height: 1.375rem;
+  max-height: 1.375rem;
+  overflow: hidden;
+  padding: 0.1875rem 1.75rem 0.1875rem 0.5rem;
+}
+
+.mn-notepad-tabs-toggle {
+  position: absolute;
+  right: 0.375rem;
+  top: 0.3125rem;
+  z-index: 2;
+  display: grid;
+  width: 1.125rem;
+  height: 1.125rem;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--secondary) 38%, var(--card));
+  color: color-mix(in srgb, var(--muted-foreground) 86%, var(--foreground));
+  cursor: pointer;
+}
+
+.mn-notepad-tabs-toggle::before {
+  width: 0.3125rem;
+  height: 0.3125rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  content: "";
+  transform: translateY(0.0625rem) rotate(-135deg);
+}
+
+.mn-notepad-tabs-section[data-collapsed="true"] .mn-notepad-tabs-toggle {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.mn-notepad-tabs-section[data-collapsed="true"] .mn-notepad-tabs-toggle::before {
+  transform: translateY(-0.0625rem) rotate(45deg);
+}
+
+.mn-notepad-tabs-toggle:hover,
+.mn-notepad-tabs-toggle:focus-visible {
+  border-color: color-mix(in srgb, var(--primary) 34%, var(--border));
+  background: color-mix(in srgb, var(--secondary) 72%, var(--card));
+  color: var(--foreground);
+  outline: none;
+}
+
+.mn-notepad-tabs-collapsed {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 1rem;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.mn-notepad-tabs-collapsed::before {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--border) 42%, transparent),
+    color-mix(in srgb, var(--primary) 34%, transparent),
+    color-mix(in srgb, var(--border) 42%, transparent)
+  );
+  content: "";
+  opacity: 0.72;
+}
+
+.mn-notepad-tabs-collapsed:hover::before,
+.mn-notepad-tabs-collapsed:focus-visible::before {
+  opacity: 1;
+}
+
+.mn-notepad-tab-groups {
+  display: grid;
+  gap: 0.125rem;
+}
+
+.mn-notepad-tab-row {
+  display: grid;
+  grid-template-columns: 1.625rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.125rem;
+  min-height: 1.3125rem;
+}
+
+.mn-notepad-row-label {
+  display: flex;
+  width: 100%;
+  min-height: 1.25rem;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: color-mix(in srgb, var(--muted-foreground) 84%, var(--foreground));
+  font-size: 0.5rem;
+  font-weight: 850;
+  line-height: 1;
+  opacity: 0.82;
+  text-align: center;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.mn-notepad-row-tabs {
+  display: flex;
+  min-width: 0;
+  gap: 0.125rem;
+  overflow-x: auto;
+  padding-block: 0.03125rem;
+}
+
+.mn-notepad-row-tabs[data-drop-active="end"] {
+  box-shadow: inset -0.1875rem 0 0 color-mix(in srgb, var(--primary) 58%, transparent);
+}
+
+.mn-notepad-tab,
+.mn-notepad-add-tab {
+  flex: 0 0 auto;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-size: 0.65625rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.mn-notepad-tab {
+  display: inline-flex;
+  min-width: 1.625rem;
+  min-height: 1.25rem;
+  max-width: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15625rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
+  border-radius: 999px;
+  padding: 0.09375rem 0.3125rem;
+  background: color-mix(in srgb, var(--secondary) 46%, transparent);
+  color: var(--muted-foreground);
+  transition:
+    opacity 140ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 140ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mn-notepad-tab:hover {
+  background: color-mix(in srgb, var(--secondary) 82%, transparent);
+  color: var(--foreground);
+}
+
+.mn-notepad-tab[data-active="true"] {
+  max-width: 6.75rem;
+  justify-content: flex-start;
+  color: var(--foreground);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--primary) 36%, transparent),
+    0 0.1875rem 0.5rem color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+.mn-notepad-tab[data-branch-specific="true"] {
+  border-color: color-mix(in srgb, var(--primary) 34%, var(--border));
+  box-shadow: inset 0 -0.125rem 0 color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+.mn-notepad-tab[data-branch-specific="true"][data-active="true"] {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--primary) 36%, transparent),
+    inset 0 -0.125rem 0 color-mix(in srgb, var(--primary) 24%, transparent),
+    0 0.1875rem 0.5rem color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+.mn-notepad-tab[data-dragging="true"] {
+  opacity: 0.52;
+}
+
+.mn-notepad-tab[data-drop-position="before"],
+.mn-notepad-tab[data-drop-position="after"] {
+  position: relative;
+  transform: translateY(-1px);
+}
+
+.mn-notepad-tab[data-drop-position="before"]::before,
+.mn-notepad-tab[data-drop-position="after"]::after {
+  position: absolute;
+  top: 0.125rem;
+  bottom: 0.125rem;
+  width: 0.1875rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 72%, var(--foreground));
+  box-shadow: 0 0 0.5rem color-mix(in srgb, var(--primary) 34%, transparent);
+  content: "";
+}
+
+.mn-notepad-tab[data-drop-position="before"]::before {
+  left: -0.25rem;
+}
+
+.mn-notepad-tab[data-drop-position="after"]::after {
+  right: -0.25rem;
+}
+
+.mn-notepad-tab[data-scope="global"][data-active="true"] {
+  background: color-mix(in srgb, var(--primary) 16%, var(--secondary));
+}
+
+.mn-notepad-tab[data-scope="character"][data-active="true"] {
+  background: color-mix(in srgb, var(--primary) 12%, rgb(22 101 52 / 0.32));
+}
+
+.mn-notepad-tab[data-scope="chat"][data-active="true"] {
+  background: color-mix(in srgb, var(--primary) 12%, rgb(30 64 175 / 0.32));
+}
+
+.mn-notepad-tab-number,
+.mn-notepad-tab-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mn-notepad-tab-number {
+  position: relative;
+  flex: 0 0 auto;
+  overflow: visible;
+  text-align: center;
+}
+
+.mn-notepad-tab[data-branch-specific="true"] .mn-notepad-tab-number::after {
+  position: absolute;
+  left: 50%;
+  bottom: -0.1875rem;
+  width: 0.5625rem;
+  height: 0.3125rem;
+  border-left: 1.5px solid color-mix(in srgb, var(--primary) 56%, var(--muted-foreground));
+  border-bottom: 1.5px solid color-mix(in srgb, var(--primary) 56%, var(--muted-foreground));
+  border-radius: 0 0 0 0.3125rem;
+  content: "";
+  opacity: 0.68;
+  transform: translateX(-42%);
+}
+
+.mn-notepad-tab[data-active="true"] .mn-notepad-tab-number {
+  display: none;
+}
+
+.mn-notepad-tab-title {
+  flex: 1 1 auto;
+  max-width: 5.75rem;
+  color: color-mix(in srgb, var(--foreground) 92%, var(--muted-foreground));
+}
+
+.mn-notepad-add-wrap,
+.mn-notepad-actions-wrap {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.mn-notepad-add-tab {
+  display: inline-flex;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: 0 0.375rem 0.875rem color-mix(in srgb, var(--primary) 22%, transparent);
+  font-size: 0.96875rem;
+  font-weight: 850;
+  line-height: 1;
+  padding: 0;
+}
+
+.mn-notepad-add-tab:hover {
+  filter: brightness(1.04);
+}
+
+.mn-notepad-add-menu,
+.mn-notepad-actions-menu {
+  position: absolute;
+  top: calc(100% + 0.375rem);
+  right: 0;
+  z-index: 7;
+  display: grid;
+  width: 9rem;
+  max-height: min(16rem, 58vh);
+  gap: 0.125rem;
+  overflow-y: auto;
+  border: 1px solid color-mix(in srgb, var(--primary) 22%, var(--border));
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--popover, var(--card)) 96%, var(--background));
+  box-shadow:
+    0 0.75rem 2rem rgb(0 0 0 / 0.42),
+    inset 0 1px 0 color-mix(in srgb, var(--foreground) 7%, transparent);
+  padding: 0.25rem;
+}
+
+.mn-notepad-actions-menu {
+  width: 10rem;
+}
+
+.mn-notepad-add-choice,
+.mn-notepad-menu-button {
+  overflow: hidden;
+  border-radius: 0.375rem;
+  background: transparent;
+  color: var(--foreground);
+  cursor: pointer;
+  font-size: 0.71875rem;
+  font-weight: 700;
+  padding: 0.4375rem 0.5rem;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mn-notepad-add-choice:hover,
+.mn-notepad-menu-button:hover {
+  background: var(--secondary);
+}
+
+.mn-notepad-menu-danger {
+  color: var(--destructive);
+}
+
+.mn-notepad-menu-button:disabled {
+  cursor: default;
+  opacity: 0.48;
+}
+
+.mn-notepad-menu-button:disabled:hover {
+  background: transparent;
+}
+
+.mn-notepad-confirm-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      color-mix(in srgb, var(--primary) 14%, transparent),
+      transparent 48%
+    ),
+    color-mix(in srgb, var(--background) 62%, transparent);
+  padding: 0.75rem;
+}
+
+.mn-notepad-confirm-card {
+  width: min(100%, 17rem);
+  border: 1px solid color-mix(in srgb, var(--destructive) 28%, var(--border));
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--popover, var(--card)) 92%, var(--background));
+  box-shadow:
+    0 1rem 2.25rem rgb(0 0 0 / 0.42),
+    inset 0 1px 0 color-mix(in srgb, var(--foreground) 8%, transparent);
+  padding: 0.75rem;
+}
+
+.mn-notepad-confirm-eyebrow {
+  color: color-mix(in srgb, var(--destructive) 82%, var(--primary));
+  font-size: 0.59375rem;
+  font-weight: 850;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.mn-notepad-confirm-title {
+  margin: 0.25rem 0 0;
+  color: var(--foreground);
+  font-size: 0.9375rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.mn-notepad-confirm-message {
+  margin: 0.375rem 0 0;
+  color: color-mix(in srgb, var(--foreground) 78%, var(--muted-foreground));
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+
+.mn-notepad-confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.375rem;
+  margin-top: 0.75rem;
+}
+
+.mn-notepad-confirm-button {
+  min-height: 1.75rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-size: 0.71875rem;
+  font-weight: 800;
+  line-height: 1;
+  padding: 0.4375rem 0.625rem;
+}
+
+.mn-notepad-confirm-cancel {
+  border: 1px solid color-mix(in srgb, var(--border) 84%, transparent);
+  background: color-mix(in srgb, var(--secondary) 44%, transparent);
+  color: var(--foreground);
+}
+
+.mn-notepad-confirm-cancel:hover {
+  background: color-mix(in srgb, var(--secondary) 78%, transparent);
+}
+
+.mn-notepad-confirm-delete {
+  background: color-mix(in srgb, var(--destructive) 86%, var(--primary));
+  color: var(--destructive-foreground, var(--primary-foreground));
+  box-shadow: 0 0.375rem 0.875rem color-mix(in srgb, var(--destructive) 18%, transparent);
+}
+
+.mn-notepad-confirm-delete:hover {
+  filter: brightness(1.04);
+}
+
+.mn-notepad-import-card .mn-notepad-confirm-eyebrow {
+  color: color-mix(in srgb, var(--primary) 78%, var(--foreground));
+}
+
+.mn-notepad-confirm-restore {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: 0 0.375rem 0.875rem color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+.mn-notepad-confirm-restore:hover {
+  filter: brightness(1.04);
+}
+
+.mn-notepad-confirm-button:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--primary) 72%, var(--foreground));
+  outline-offset: 2px;
+}
+
+.mn-notepad-scope-line {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+  background: color-mix(in srgb, var(--card) 82%, var(--background));
+  padding: 0.1875rem 0.75rem 0.125rem;
+}
+
+.mn-notepad-active-title,
+.mn-notepad-title-edit {
+  min-width: 0;
+  width: 100%;
+  max-width: none;
+  flex: 0 1 auto;
+  color: var(--foreground);
+  font: inherit;
+  font-size: 0.65625rem;
+  font-weight: 750;
+  line-height: 1.15;
+  outline: none;
+}
+
+.mn-notepad-active-title {
+  overflow: hidden;
+  border-radius: 0.25rem;
+  background: transparent;
+  cursor: default;
+  padding: 0.09375rem 0;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mn-notepad-active-title:hover {
+  color: color-mix(in srgb, var(--foreground) 92%, var(--primary));
+}
+
+.mn-notepad-active-title:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--primary) 56%, transparent);
+  outline-offset: 2px;
+}
+
+.mn-notepad-title-edit {
+  border: 1px solid color-mix(in srgb, var(--primary) 34%, var(--border));
+  border-radius: 0.375rem;
+  background: color-mix(in srgb, var(--background) 72%, transparent);
+  padding: 0.15625rem 0.375rem;
+}
+
+.mn-notepad-title-edit:focus {
+  border-color: color-mix(in srgb, var(--primary) 48%, var(--border));
+}
+
+.mn-notepad-status {
+  position: absolute;
+  left: 0.625rem;
+  right: 0.625rem;
+  bottom: 1rem;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--primary) 24%, var(--border));
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--popover, var(--card)) 92%, var(--background));
+  box-shadow: 0 0.625rem 1.5rem rgb(0 0 0 / 0.34);
+  color: var(--muted-foreground);
+  font-size: 0.65625rem;
+  font-weight: 650;
+  line-height: 1.25;
+  padding: 0.4375rem 0.4375rem 0.4375rem 0.625rem;
+}
+
+.mn-notepad-status[hidden] {
+  display: none;
+}
+
+.mn-notepad-status-text {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.mn-notepad-status[data-tone="ok"] {
+  color: color-mix(in srgb, var(--primary) 72%, var(--foreground));
+}
+
+.mn-notepad-status[data-tone="error"] {
+  color: var(--destructive);
+}
+
+.mn-notepad-status-dismiss {
+  position: relative;
+  width: 1.125rem;
+  height: 1.125rem;
+  flex: 0 0 auto;
+  border-radius: 0.3125rem;
+  background: color-mix(in srgb, var(--secondary) 36%, transparent);
+  color: currentColor;
+  cursor: pointer;
+}
+
+.mn-notepad-status-dismiss::before,
+.mn-notepad-status-dismiss::after {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0.5rem;
+  height: 1.5px;
+  border-radius: 999px;
+  background: currentColor;
+  content: "";
+}
+
+.mn-notepad-status-dismiss::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.mn-notepad-status-dismiss::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.mn-notepad-status-dismiss:hover {
+  background: color-mix(in srgb, var(--secondary) 72%, transparent);
+}
+
+.mn-notepad-formatbar {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.1875rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+  background: color-mix(in srgb, var(--card) 82%, var(--background));
+  padding: 0.1875rem 0.5rem;
+}
+
+.mn-notepad-format-group,
+.mn-notepad-mode-group {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.125rem;
+}
+
+.mn-notepad-format-group {
+  overflow-x: auto;
+}
+
+.mn-notepad-format-button {
+  display: inline-flex;
+  min-width: 1.25rem;
+  min-height: 1.1875rem;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+  border-radius: 0.3125rem;
+  background: color-mix(in srgb, var(--secondary) 34%, transparent);
+  color: var(--muted-foreground);
+  cursor: pointer;
+  font-size: 0.59375rem;
+  font-weight: 750;
+  line-height: 1;
+  padding: 0.125rem 0.28125rem;
+}
+
+.mn-notepad-format-button:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--secondary) 76%, transparent);
+  color: var(--foreground);
+}
+
+.mn-notepad-format-button:disabled {
+  cursor: default;
+  opacity: 0.44;
+}
+
+.mn-notepad-format-bold {
+  font-weight: 900;
+}
+
+.mn-notepad-format-italic {
+  font-style: italic;
+}
+
+.mn-notepad-format-underline {
+  text-decoration: underline;
+  text-underline-offset: 0.125rem;
+}
+
+.mn-notepad-format-strike {
+  text-decoration: line-through;
+}
+
+.mn-notepad-format-icon {
+  position: relative;
+  width: 1.375rem;
+  padding: 0;
+}
+
+.mn-notepad-format-icon::before,
+.mn-notepad-format-icon::after {
+  position: absolute;
+  pointer-events: none;
+  content: "";
+}
+
+.mn-notepad-format-bullet::before {
+  left: 0.375rem;
+  top: 0.375rem;
+  width: 0.1875rem;
+  height: 0.1875rem;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow:
+    0 0.3125rem 0 currentColor,
+    0 0.625rem 0 currentColor;
+}
+
+.mn-notepad-format-bullet::after {
+  left: 0.6875rem;
+  top: 0.40625rem;
+  width: 0.5rem;
+  height: 0.09375rem;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow:
+    0 0.3125rem 0 currentColor,
+    0 0.625rem 0 currentColor;
+  opacity: 0.78;
+}
+
+.mn-notepad-format-check::before {
+  left: 0.3125rem;
+  top: 0.375rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 1.5px solid currentColor;
+  border-radius: 0.1875rem;
+  opacity: 0.84;
+}
+
+.mn-notepad-format-check::after {
+  left: 0.9375rem;
+  top: 0.4375rem;
+  width: 0.375rem;
+  height: 0.09375rem;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0.3125rem 0 currentColor;
+  opacity: 0.76;
+}
+
+.mn-notepad-mode-toggle {
+  position: relative;
+  display: grid;
+  width: 2.875rem;
+  min-width: 2.875rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  justify-items: center;
+  overflow: hidden;
+  border-radius: 999px;
+  padding: 0;
+}
+
+.mn-notepad-mode-toggle::before {
+  position: absolute;
+  left: 0.125rem;
+  top: 0.125rem;
+  bottom: 0.125rem;
+  z-index: 0;
+  width: calc(50% - 0.125rem);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 18%, var(--secondary));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--primary) 32%, transparent);
+  pointer-events: none;
+  content: "";
+  transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mn-notepad-mode-toggle[data-mode="preview"]::before {
+  transform: translateX(calc(100% + 0.125rem));
+}
+
+.mn-notepad-mode-icon {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 1.25rem;
+  height: 1.0625rem;
+  color: color-mix(in srgb, var(--muted-foreground) 82%, var(--foreground));
+  transition: color 140ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mn-notepad-mode-toggle[data-mode="edit"] .mn-notepad-mode-edit-icon,
+.mn-notepad-mode-toggle[data-mode="preview"] .mn-notepad-mode-preview-icon {
+  color: var(--foreground);
+}
+
+.mn-notepad-mode-icon::before,
+.mn-notepad-mode-icon::after {
+  position: absolute;
+  pointer-events: none;
+  content: "";
+}
+
+.mn-notepad-mode-edit-icon::before {
+  left: 0.40625rem;
+  top: 0.5625rem;
+  width: 0.625rem;
+  height: 0.1375rem;
+  border-radius: 999px;
+  background: currentColor;
+  transform: rotate(-42deg);
+}
+
+.mn-notepad-mode-edit-icon::after {
+  left: 0.34375rem;
+  top: 0.78125rem;
+  width: 0.25rem;
+  height: 0.125rem;
+  border-bottom: 1.5px solid currentColor;
+  opacity: 0.82;
+  transform: rotate(-42deg);
+}
+
+.mn-notepad-mode-preview-icon::before {
+  left: 0.28125rem;
+  top: 0.375rem;
+  width: 0.75rem;
+  height: 0.46875rem;
+  border: 1.5px solid currentColor;
+  border-radius: 999px / 72%;
+}
+
+.mn-notepad-mode-preview-icon::after {
+  left: 0.625rem;
+  top: 0.53125rem;
+  width: 0.1875rem;
+  height: 0.1875rem;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.mn-notepad-mode-toggle[data-mode="preview"],
+.mn-notepad-mode-toggle[data-mode="edit"] {
+  border-color: color-mix(in srgb, var(--primary) 38%, var(--border));
+  background: color-mix(in srgb, var(--secondary) 46%, transparent);
+  color: var(--foreground);
+}
+
+.mn-notepad-textarea {
+  min-height: 12rem;
+  flex: 1 1 auto;
+  resize: none;
+  border: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font: inherit;
+  font-size: 0.84375rem;
+  line-height: 1.5;
+  outline: none;
+  padding: 0.75rem;
+}
+
+.mn-notepad-textarea:focus {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--primary) 28%, transparent);
+}
+
+.mn-notepad-textarea:disabled {
+  cursor: default;
+  opacity: 0.68;
+}
+
+.mn-notepad-preview {
+  min-height: 12rem;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  background: var(--background);
+  color: var(--foreground);
+  font-size: 0.84375rem;
+  line-height: 1.5;
+  padding: 0.75rem;
+}
+
+.mn-notepad-preview :where(p, ul, ol, blockquote, h3, h4, h5) {
+  margin-block: 0 0.625rem;
+}
+
+.mn-notepad-preview :where(ul, ol) {
+  padding-left: 0;
+}
+
+.mn-notepad-preview :where(li) {
+  margin-block: 0.1875rem;
+}
+
+.mn-notepad-preview :where(ul:not(.mn-notepad-preview-checklist), ol) {
+  list-style: none;
+}
+
+.mn-notepad-preview :where(ul:not(.mn-notepad-preview-checklist), ol) > li {
+  display: grid;
+  grid-template-columns: 1rem minmax(0, 1fr);
+  align-items: baseline;
+  column-gap: 0.4375rem;
+  padding-left: 0;
+}
+
+.mn-notepad-preview :where(ul:not(.mn-notepad-preview-checklist)) > li::before {
+  grid-column: 1;
+  justify-self: center;
+  width: 0.3125rem;
+  height: 0.3125rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 76%, var(--foreground));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--background) 82%, transparent);
+  content: "";
+}
+
+.mn-notepad-preview ol {
+  counter-reset: mn-notepad-preview-list;
+}
+
+.mn-notepad-preview ol > li {
+  counter-increment: mn-notepad-preview-list;
+}
+
+.mn-notepad-preview ol > li::before {
+  grid-column: 1;
+  justify-self: end;
+  color: color-mix(in srgb, var(--primary) 76%, var(--foreground));
+  content: counter(mn-notepad-preview-list) ".";
+  font-size: 0.78em;
+  font-weight: 850;
+  line-height: inherit;
+}
+
+.mn-notepad-preview :where(strong) {
+  font-weight: 800;
+}
+
+.mn-notepad-preview :where(em) {
+  font-style: italic;
+}
+
+.mn-notepad-preview :where(s) {
+  opacity: 0.72;
+}
+
+.mn-notepad-preview :where(u) {
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.14em;
+}
+
+.mn-notepad-preview :where(a) {
+  color: color-mix(in srgb, var(--primary) 72%, var(--foreground));
+  text-decoration: underline;
+  text-underline-offset: 0.125rem;
+}
+
+.mn-notepad-preview :where(code) {
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  border-radius: 0.25rem;
+  background: color-mix(in srgb, var(--secondary) 42%, transparent);
+  font-family: Consolas, Monaco, "Courier New", monospace;
+  font-size: 0.8125em;
+  padding: 0.0625rem 0.25rem;
+}
+
+.mn-notepad-preview :where(blockquote) {
+  border-left: 1px solid color-mix(in srgb, var(--primary) 36%, var(--border));
+  color: var(--muted-foreground);
+  padding-left: 0.625rem;
+}
+
+.mn-notepad-preview :where(h3, h4, h5) {
+  font-size: 0.9375rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.mn-notepad-preview-checklist {
+  list-style: none;
+  padding-left: 0;
+}
+
+.mn-notepad-preview-checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.375rem;
+}
+
+.mn-notepad-preview-check {
+  position: relative;
+  display: block;
+  width: 0.9375rem;
+  height: 0.9375rem;
+  flex: 0 0 auto;
+  border: 1.5px solid color-mix(in srgb, var(--primary) 38%, var(--border));
+  border-radius: 0.25rem;
+  background: color-mix(in srgb, var(--background) 76%, var(--card));
+  cursor: pointer;
+  margin-top: 0.15625rem;
+  padding: 0;
+}
+
+.mn-notepad-preview-check:hover,
+.mn-notepad-preview-check:focus-visible {
+  border-color: color-mix(in srgb, var(--primary) 54%, var(--border));
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 12%, transparent);
+}
+
+.mn-notepad-preview-check[data-checked="true"] {
+  border-color: color-mix(in srgb, var(--primary) 58%, var(--border));
+  background: color-mix(in srgb, var(--primary) 18%, transparent);
+}
+
+.mn-notepad-preview-check[data-checked="true"]::after {
+  position: absolute;
+  left: 0.1875rem;
+  top: 0.0625rem;
+  width: 0.3125rem;
+  height: 0.5rem;
+  border-bottom: 2px solid color-mix(in srgb, var(--primary) 82%, var(--foreground));
+  border-right: 2px solid color-mix(in srgb, var(--primary) 82%, var(--foreground));
+  content: "";
+  transform: rotate(42deg);
+}
+
+.mn-notepad-preview-gap {
+  height: 0.375rem;
+}
+
+.mn-notepad-preview-empty {
+  color: var(--muted-foreground);
+}
+
+.mn-notepad-resize-handle {
+  position: absolute;
+  right: 0.25rem;
+  bottom: 0.25rem;
+  width: 1rem;
+  height: 1rem;
+  cursor: nwse-resize;
+  opacity: 0.46;
+}
+
+.mn-notepad-resize-handle::before {
+  position: absolute;
+  right: 0.125rem;
+  bottom: 0.125rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-right: 2px solid var(--muted-foreground);
+  border-bottom: 2px solid var(--muted-foreground);
+  content: "";
+}
+
+.mn-notepad-resize-handle:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 640px) {
+  .mn-notepad-root {
+    right: 0.75rem;
+    bottom: 4.5rem;
+    left: 0.75rem;
+  }
+
+  .mn-notepad-launcher {
+    margin-left: auto;
+    display: block;
+  }
+
+  .mn-notepad-panel {
+    width: 100%;
+    min-height: 0;
+    max-height: 68vh;
+  }
+
+  .mn-notepad-header {
+    cursor: default;
+  }
+
+  .mn-notepad-grip,
+  .mn-notepad-resize-handle {
+    display: none;
+  }
+
+  .mn-notepad-tabs-section {
+    padding-left: 0.25rem;
+  }
+
+  .mn-notepad-tab-row {
+    grid-template-columns: 1.875rem minmax(0, 1fr);
+  }
+
+  .mn-notepad-row-label {
+    font-size: 0.5rem;
+  }
+
+  .mn-notepad-textarea {
+    min-height: 11rem;
+  }
+
+  .mn-notepad-preview {
+    min-height: 11rem;
+  }
+
+}
