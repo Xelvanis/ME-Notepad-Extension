@@ -21,7 +21,7 @@ ME Notes adds a compact, movable notepad to Marinara Engine chats. It's for trac
 
 ## Download
 
-Download `ME-Notes.json` from the latest GitHub Release.
+Download `ME-Notes.extension.json` from the latest GitHub Release.
 
 Chuck that bad boy into the Import Extension section in Marinara Engine.
 
@@ -31,14 +31,14 @@ For fancy tech wizards - If you're looking at the source code instead of a relea
 node scripts/build-extension.mjs
 ```
 
-That creates or refreshes `ME-Notes.json` in the repo root.
+That creates or refreshes `ME-Notes.extension.json` in the repo root.
 
 ## Install
 
 1. Open Marinara Engine.
 2. Go to `Settings -> Extensions`.
 3. Click `Import Extension`.
-4. Select `ME-Notes.json`.
+4. Select `ME-Notes.extension.json`.
 5. Open a chat and click `Notes`.
 
 That's it! Your continuity board is online. Canon may now be color-coded inside your brain.
@@ -82,7 +82,7 @@ node scripts/build-extension.mjs
 The generated file is:
 
 ```text
-ME-Notes.json
+ME-Notes.extension.json
 ```
 
 ## License
