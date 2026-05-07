@@ -1,8 +1,8 @@
-# Local Chat Notepad for Marinara Engine
+# ME Notes for Marinara Engine
 
 Tiny floating notes for people whose AI relationship continuity has more moving parts than a 200-episode anime.
 
-Local Chat Notepad adds a compact, movable notepad to Marinara Engine chats. It's for tracking character lore, branch timelines, date plans, emotional continuity, "don't forget this promise," and all the other high-priority waifu logistics that deserve their own little command center.
+ME Notes adds a compact, movable notepad to Marinara Engine chats. It's for tracking character lore, branch timelines, date plans, emotional continuity, "don't forget this promise," and all the other high-priority waifu logistics that deserve their own little command center.
 
 ## What It Does
 

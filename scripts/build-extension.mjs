@@ -6,7 +6,7 @@ const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(scriptDir, "..");
 
 const manifest = {
-  name: "Local Chat Notepad",
+  name: "ME Notes",
   description:
     "Adds a compact, movable, resizable browser-local notepad to Marinara Engine chats. Tabs are grouped by scope as numbered draggable bubbles, created as global/character/chat/branch-wide notes, only shown when relevant, and can be renamed from the active tab details. Includes Markdown preview, formatting helpers, layout reset, backup, restore, and tab deletion.",
   css: await readFile(path.join(repoRoot, "src", "style.css"), "utf8"),
