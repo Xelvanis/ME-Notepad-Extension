@@ -11,9 +11,8 @@ Local Chat Notepad adds a compact, movable notepad to Marinara Engine chats. It 
 - Lets you create tabs scoped to:
   - **Global**: visible in every chat.
   - **Character**: visible in chats with that character.
-  - **Chat**: visible only in the current chat.
-  - **Branch**: visible only in the current branch.
-  - **All branches**: shared across a branched chat family.
+  - **Chat**: visible only in the current chat or branch.
+  - **Branch-wide**: shared across every branch in a branched chat family.
 - Supports renameable, draggable tabs grouped by scope.
 - Includes simple Markdown editing and preview.
 - Supports bold, italic, underline, strikethrough, bullets, and checklists.
@@ -48,9 +47,8 @@ Click `+` to create a new tab. Pick the scope based on where you want the note t
 
 - Use **Global** for personal rules, general RP preferences, or recurring reminders.
 - Use **Character** for facts about one character across multiple chats.
-- Use **Chat** for one specific conversation.
-- Use **Branch** when one timeline needs its own receipts.
-- Use **All branches** for facts shared across every branch of a chat.
+- Use **Chat** for one specific conversation or branch timeline.
+- Use **Branch-wide** for facts shared across every branch of a chat.
 
 Double-click the active tab title to rename it. Drag tabs within their row to reorder them. Use the edit/preview toggle to switch between writing Markdown and seeing the polished version.
 
